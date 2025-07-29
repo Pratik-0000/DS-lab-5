@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+
 int modPower(int base, int exp, int mod) {
     int result = 1;
     base = base % mod;
@@ -11,22 +12,32 @@ int modPower(int base, int exp, int mod) {
     }
     return result;
 }
-bool isProbablyPrime(int n) {
-    int a = 2;
+
+bool isProbablyPrime(int n, int a) {
     if (n <= 1 || n == 4) return false;
     if (n <= 3) return true;
-    if (modPower(a, n - 1, n) != 1)
-        return false;
-    return true;
+    return modPower(a, n - 1, n) == 1;
 }
 
 int main() {
     int num;
-    cout<<"Enter a number";
+    cout << "Enter a number: ";
     cin >> num;
-    if (isProbablyPrime(num))
+
+    int bases[] = {2, 3, 5};
+    bool isPrime = true;
+
+    for (int i = 0; i < 3; i++) {
+        if (!isProbablyPrime(num, bases[i])) {
+            isPrime = false;
+            break;
+        }
+    }
+
+    if (isPrime)
         cout << "prime\n";
     else
         cout << "Composite\n";
+
     return 0;
 }
